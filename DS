@@ -1,0 +1,942 @@
+#Abstract Data Type
+
+class Stack:
+    def __init__(self, size):
+        self.array = []
+        self.size = size  
+        self.top = 0    
+
+    def push(self, element):
+        if self.top >= self.size:
+            print("Stack Full.")
+        else:
+            self.array.append(element)
+            self.top += 1
+
+    def pop(self):
+        if self.top == 0:
+            print("Stack Empty.")
+            return None
+        else:
+            self.top -= 1
+            return self.array.pop()  
+
+    def peek(self):
+        if self.top == 0:
+            return None
+        else:
+            return self.array[self.top - 1]  
+
+    def display(self):
+        if self.top == 0:
+            print("Stack is empty.")
+        else:
+            for i in range(self.top - 1, -1, -1):
+                print(self.array[i])
+
+
+stack = Stack(5)
+stack.push(1)
+stack.push(2)
+stack.push(3)
+stack.push(4)
+stack.push(5)
+stack.push(6)
+stack.display()
+
+#Stack with insertion, deletion, traversal operations
+
+class Stack:
+    
+  def __init__(self):
+    self.items = []
+
+  def is_empty(self):
+    return len(self.items) == 0
+
+  def push(self, data):
+    self.items.append(data)
+
+  def pop(self):
+    if self.is_empty():
+      return None
+    return self.items.pop()
+
+  def peek(self):
+    if self.is_empty():
+      return None
+    return self.items[-1]
+
+  def size(self):
+    return len(self.items)
+
+  def print_stack(self):
+    print("Stack elements:")
+    for item in self.items[::-1]:
+      print(item)
+
+stack = Stack()
+
+stack.push(10)
+stack.push(20)
+stack.push(30)
+print("Peek element: ",stack.peek())
+print("Stack size:", stack.size())
+print("Popped element:", stack.pop())
+
+stack.print_stack()
+
+#Singly Linked list with insertion, deletion, traversal operations
+
+class Node:
+  def __init__(self, data):
+    self.data = data
+    self.next = None
+
+class LinkedList:
+  def __init__(self):
+    self.head = None
+
+  def is_empty(self):
+    return self.head is None
+
+  def insert_at_beginning(self, data):
+    new_node = Node(data)
+    new_node.next = self.head
+    self.head = new_node
+
+  def insert_at_end(self, data):
+    new_node = Node(data)
+    if self.is_empty():
+      self.head = new_node
+      return
+    current = self.head
+    while current.next:
+      current = current.next
+    current.next = new_node
+
+  def delete_at_beginning(self):
+    if self.is_empty():
+      return None
+    deleted_node = self.head
+    self.head = self.head.next
+    return deleted_node.data
+
+  def delete_at_end(self):
+    if self.is_empty():
+      return None
+    if self.head.next is None:
+      deleted_node = self.head
+      self.head = None
+      return deleted_node.data
+    current = self.head
+    while current.next.next:
+      current = current.next
+    deleted_node = current.next
+    current.next = None
+    return deleted_node.data
+
+  def traverse(self):
+    current = self.head
+    while current:
+      print(current.data, end=" -> ")
+      current = current.next
+    print("None")
+
+linked_list = LinkedList()
+
+linked_list.insert_at_beginning(50)
+linked_list.insert_at_end(30)
+linked_list.insert_at_beginning(20)
+linked_list.insert_at_end(10)
+
+print("Linked list:")
+linked_list.traverse()
+
+deleted_data = linked_list.delete_at_beginning()
+if deleted_data:
+  print("Deleted from beginning:", deleted_data)
+deleted_data = linked_list.delete_at_end()
+if deleted_data:
+  print("Deleted from end:", deleted_data)
+
+print("Linked list after deletions:")
+linked_list.traverse()
+
+#Doubly Linked list with insertion, deletion, traversal operations
+
+class Node:
+  def __init__(self, data):
+    self.data = data
+    self.next = None
+    self.prev = None
+
+class DoublyLinkedList:
+  def __init__(self):
+    self.head = None
+    self.tail = None
+
+  def is_empty(self):
+    return self.head is None
+
+  def insert_at_beginning(self, data):
+    new_node = Node(data)
+    if self.is_empty():
+      self.head = self.tail = new_node
+    else:
+      new_node.next = self.head
+      self.head.prev = new_node
+      self.head = new_node
+
+  def insert_at_end(self, data):
+    new_node = Node(data)
+    if self.is_empty():
+      self.head = self.tail = new_node
+    else:
+      self.tail.next = new_node
+      new_node.prev = self.tail
+      self.tail = new_node
+
+  def delete_at_beginning(self):
+    if self.is_empty():
+      return None
+    deleted_node = self.head
+    if self.head == self.tail:
+      self.head = self.tail = None
+    else:
+      self.head = self.head.next
+      self.head.prev = None
+    return deleted_node.data
+
+  def delete_at_end(self):
+    if self.is_empty():
+      return None
+    deleted_node = self.tail
+    if self.head == self.tail:
+      self.head = self.tail = None
+    else:
+      self.tail = self.tail.prev
+      self.tail.next = None
+    return deleted_node.data
+
+  def traverse(self):
+    current = self.head
+    while current:
+      print(current.data, end=" <-> ")
+      current = current.next
+    print("None")
+
+if __name__ == '__main__':
+  linked_list = DoublyLinkedList()
+
+  ele = int(input("Enter element to insert at the beginning : "))
+  linked_list.insert_at_beginning(ele)
+  ele = int(input("Enter element to insert at the end : "))
+  linked_list.insert_at_end(ele)
+  ele = int(input("Enter element to insert at the beginning : "))
+  linked_list.insert_at_beginning(ele)
+  ele = int(input("Enter element to insert at the end : "))
+  linked_list.insert_at_end(ele)
+
+  print("Doubly Linked List:")
+  linked_list.traverse()
+
+  deleted_data = linked_list.delete_at_beginning()
+  if deleted_data:
+    print("Deleted from beginning:", deleted_data)
+  deleted_data = linked_list.delete_at_end()
+  if deleted_data:
+    print("Deleted from end:", deleted_data)
+
+  print("Doubly Linked List after deletions:")
+  linked_list.traverse()
+
+#Queue with insertion, deletion, traversal operations
+  
+class Queue:
+    def __init__(self):
+        self.queue = []
+
+    def is_empty(self):
+        return len(self.queue) == 0
+
+    def enqueue(self, item):
+        self.queue.append(item)
+        print(f"Enqueued: {item}")
+
+    def dequeue(self):
+        if self.is_empty():
+            print("Queue is empty. Cannot dequeue.")
+            return None
+        return self.queue.pop(0)
+
+    def traverse(self):
+        if self.is_empty():
+            print("Queue is empty.")
+        else:
+            print("Queue contains:", end=" ")
+            for item in self.queue:
+                print(item, end=" ")
+            print()
+
+if __name__ == "__main__":
+    q = Queue()
+
+    q.enqueue(1)
+    q.enqueue(2)
+    q.enqueue(3)
+
+    q.traverse()
+
+    print(f"Dequeued: {q.dequeue()}")
+    print(f"Dequeued: {q.dequeue()}")
+
+    q.traverse()
+
+    print(f"Dequeued: {q.dequeue()}")
+
+    print(f"Dequeued: {q.dequeue()}")
+
+#Priority Queue with insertion, deletion, traversal operations
+
+class PriorityQueue:
+    def __init__(self):
+        self.queue = []
+
+    def is_empty(self):
+        return len(self.queue) == 0
+
+    def enqueue(self, item, priority):
+        self.queue.append((item, priority))
+        self.queue.sort(key=lambda x: x[1])
+        print(f"Enqueued: {item} with priority {priority}")
+
+    def dequeue(self):
+        if self.is_empty():
+            print("Priority Queue is empty. Cannot dequeue.")
+            return None
+        item = self.queue.pop(0)[0]
+        print(f"Dequeued: {item}")
+        return item
+
+    def traverse(self):
+        if self.is_empty():
+            print("Priority Queue is empty.")
+        else:
+            print("Priority Queue contains:")
+            for item, priority in self.queue:
+                print(f"Item: {item}, Priority: {priority}")
+
+if __name__ == "__main__":
+    pq = PriorityQueue()
+
+    pq.enqueue("Task1", 3)
+    pq.enqueue("Task2", 1)
+    pq.enqueue("Task3", 2)
+    pq.traverse()
+    pq.dequeue()
+    pq.dequeue()
+    pq.traverse()
+    pq.dequeue()
+    pq.dequeue()
+
+#Priority Queue using a list and the heapq module for efficient operations
+
+import heapq
+
+class PriorityQueue:
+  def __init__(self):
+    self.items = []
+
+  def isEmpty(self):
+    return len(self.items) == 0
+
+  def enqueue(self, item, priority):
+    heapq.heappush(self.items, (priority, item))
+
+  def dequeue(self):
+    if self.isEmpty():
+      return None
+    return heapq.heappop(self.items)[1]  
+
+  def peek(self):
+    if self.isEmpty():
+      return None
+    return heapq.nsmallest(1, self.items)[0][1]  
+
+  def size(self):
+    return len(self.items)
+
+  def traverse(self):
+    print("Priority Queue elements (highest to lowest priority):")
+    for item, _ in self.items:  
+      print(item, end=" ")
+    print()
+
+myPriorityQueue = PriorityQueue()
+
+myPriorityQueue.enqueue("Task A", 1) 
+myPriorityQueue.enqueue("Task B", 3)
+myPriorityQueue.enqueue("Task C", 2)
+
+print("Queue size:", myPriorityQueue.size())
+
+print("Dequeued element:", myPriorityQueue.dequeue())
+
+myPriorityQueue.traverse()
+
+#Binary Tree with insertion, deletion, traversal operations
+
+class Node:
+    def __init__(self, key):
+        self.left = None
+        self.right = None
+        self.val = key
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, key):
+        if self.root is None:
+            self.root = Node(key)
+        else:
+            self._insert(self.root, key)
+
+    def _insert(self, root, key):
+        if key < root.val:
+            if root.left is None:
+                root.left = Node(key)
+            else:
+                self._insert(root.left, key)
+        else:
+            if root.right is None:
+                root.right = Node(key)
+            else:
+                self._insert(root.right, key)
+
+    def delete(self, key):
+        self.root = self._delete(self.root, key)
+
+    def _delete(self, root, key):
+        if root is None:
+            return root
+        if key < root.val:
+            root.left = self._delete(root.left, key)
+        elif key > root.val:
+            root.right = self._delete(root.right, key)
+        else:
+            if root.left is None:
+                return root.right
+            elif root.right is None:
+                return root.left
+            min_larger_node = self._get_min(root.right)
+            root.val = min_larger_node.val
+            root.right = self._delete(root.right, min_larger_node.val)
+        return root
+
+    def _get_min(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+
+    def inorder_traversal(self):
+        return self._inorder_traversal(self.root)
+
+    def _inorder_traversal(self, root):
+        res = []
+        if root:
+            res = self._inorder_traversal(root.left)
+            res.append(root.val)
+            res = res + self._inorder_traversal(root.right)
+        return res
+
+    def preorder_traversal(self):
+        return self._preorder_traversal(self.root)
+
+    def _preorder_traversal(self, root):
+        res = []
+        if root:
+            res.append(root.val)
+            res = res + self._preorder_traversal(root.left)
+            res = res + self._preorder_traversal(root.right)
+        return res
+
+    def postorder_traversal(self):
+        return self._postorder_traversal(self.root)
+
+    def _postorder_traversal(self, root):
+        res = []
+        if root:
+            res = self._postorder_traversal(root.left)
+            res = res + self._postorder_traversal(root.right)
+            res.append(root.val)
+        return res
+
+
+if __name__ == "__main__":
+    bt = BinaryTree()
+    bt.insert(50)
+    bt.insert(30)
+    bt.insert(20)
+    bt.insert(40)
+    bt.insert(70)
+    bt.insert(60)
+    bt.insert(80)
+
+    print("Inorder traversal: ", bt.inorder_traversal())
+    print("Preorder traversal: ", bt.preorder_traversal())
+    print("Postorder traversal: ", bt.postorder_traversal())
+
+    bt.delete(20)
+    print("Inorder traversal after deletion of 20: ", bt.inorder_traversal())
+
+    bt.delete(30)
+    print("Inorder traversal after deletion of 30: ", bt.inorder_traversal())
+
+    bt.delete(50)
+    print("Inorder traversal after deletion of 50: ", bt.inorder_traversal())
+
+#Huffman Coding using tree
+
+import heapq
+from collections import defaultdict, Counter
+
+class Node:
+    def __init__(self, char=None, freq=None):
+        self.char = char
+        self.freq = freq
+        self.left = None
+        self.right = None
+
+    def __lt__(self, other):
+        return self.freq < other.freq
+
+def build_huffman_tree(frequencies):
+    heap = [Node(char, freq) for char, freq in frequencies.items()]
+    heapq.heapify(heap)
+
+    while len(heap) > 1:
+        left = heapq.heappop(heap)
+        right = heapq.heappop(heap)
+        merged = Node(freq=left.freq + right.freq)
+        merged.left = left
+        merged.right = right
+        heapq.heappush(heap, merged)
+
+    return heap[0]
+
+def generate_codes(node, prefix="", codebook={}):
+    if node:
+        if node.char is not None:
+            codebook[node.char] = prefix
+        generate_codes(node.left, prefix + "0", codebook)
+        generate_codes(node.right, prefix + "1", codebook)
+    return codebook
+
+def huffman_encoding(data):
+    if not data:
+        return "", {}
+
+    frequencies = Counter(data)
+    root = build_huffman_tree(frequencies)
+    codebook = generate_codes(root)
+    encoded_data = ''.join(codebook[char] for char in data)
+
+    return encoded_data, codebook
+
+def huffman_decoding(encoded_data, codebook):
+    reverse_codebook = {v: k for k, v in codebook.items()}
+    decoded_data = ""
+    current_code = ""
+
+    for bit in encoded_data:
+        current_code += bit
+        if current_code in reverse_codebook:
+            decoded_data += reverse_codebook[current_code]
+            current_code = ""
+
+    return decoded_data
+
+if __name__ == "__main__":
+    data = "SYCS"
+    print("Original data:", data)
+
+    encoded_data, codebook = huffman_encoding(data)
+    print("Encoded data:", encoded_data)
+    print("Codebook:", codebook)
+
+    decoded_data = huffman_decoding(encoded_data, codebook)
+    print("Decoded data:", decoded_data)
+
+#Graph with creation, insertion, deletion of vertices.
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_vertex(self, vertex):
+        if vertex not in self.graph:
+            self.graph[vertex] = []
+        else:
+            print(f"Vertex {vertex} already exists.")
+
+    def remove_vertex(self, vertex):
+        if vertex in self.graph:
+            for adjacent in list(self.graph[vertex]):
+                self.graph[adjacent].remove(vertex)
+            del self.graph[vertex]
+        else:
+            print(f"Vertex {vertex} does not exist.")
+
+    def add_edge(self, vertex1, vertex2):
+        if vertex1 in self.graph and vertex2 in self.graph:
+            if vertex2 not in self.graph[vertex1]:
+                self.graph[vertex1].append(vertex2)
+            if vertex1 not in self.graph[vertex2]:
+                self.graph[vertex2].append(vertex1)
+        else:
+            print("One or both vertices not found.")
+
+    def remove_edge(self, vertex1, vertex2):
+        if vertex1 in self.graph and vertex2 in self.graph:
+            if vertex2 in self.graph[vertex1]:
+                self.graph[vertex1].remove(vertex2)
+            if vertex1 in self.graph[vertex2]:
+                self.graph[vertex2].remove(vertex1)
+        else:
+            print("One or both vertices not found.")
+
+    def display(self):
+        for vertex, edges in self.graph.items():
+            print(f"{vertex}: {edges}")
+
+if __name__ == "__main__":
+    g = Graph()
+
+    g.add_vertex('A')
+    g.add_vertex('B')
+    g.add_vertex('C')
+    g.add_vertex('D')
+
+    g.add_edge('A', 'B')
+    g.add_edge('A', 'C')
+    g.add_edge('B', 'D')
+
+    print("Graph after adding vertices and edges:")
+    g.display()
+    g.remove_edge('A', 'C')
+    g.remove_vertex('D')
+
+    print("\nGraph after removing an edge and a vertex:")
+    g.display()
+
+#Breadth First Tree using Graph
+
+from collections import deque, defaultdict
+
+class Graph:
+    def __init__(self):
+        self.graph = defaultdict(list)
+
+    def add_vertex(self, vertex):
+        if vertex not in self.graph:
+            self.graph[vertex] = []
+
+    def add_edge(self, vertex1, vertex2):
+        if vertex1 in self.graph and vertex2 in self.graph:
+            self.graph[vertex1].append(vertex2)
+            self.graph[vertex2].append(vertex1)
+
+    def bfs_tree(self, start):
+        visited = set()
+        bfs_tree = defaultdict(list)
+        queue = deque([start])
+        visited.add(start)
+
+        while queue:
+            current = queue.popleft()
+            for neighbor in self.graph[current]:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    bfs_tree[current].append(neighbor)
+                    queue.append(neighbor)
+
+        return bfs_tree
+
+    def display(self):
+        for vertex, edges in self.graph.items():
+            print(f"{vertex}: {edges}")
+
+def print_bfs_tree(bfs_tree, start):
+    print(f"Breadth-First Tree starting from {start}:")
+    for vertex in bfs_tree:
+        print(f"{vertex}: {bfs_tree[vertex]}")
+
+if __name__ == "__main__":
+    g = Graph()
+
+    for v in ['A', 'B', 'C', 'D', 'E', 'F']:
+        g.add_vertex(v)
+
+    g.add_edge('A', 'B')
+    g.add_edge('A', 'C')
+    g.add_edge('B', 'D')
+    g.add_edge('B', 'E')
+    g.add_edge('C', 'F')
+
+    print("Graph:")
+    g.display()
+
+    start_vertex = 'A'
+    bfs_tree = g.bfs_tree(start_vertex)
+
+    print_bfs_tree(bfs_tree, start_vertex)
+
+#Depth First Tree using Graph.
+
+from collections import defaultdict
+
+class Graph:
+    def __init__(self):
+        self.graph = defaultdict(list)
+
+    def add_vertex(self, vertex):
+        if vertex not in self.graph:
+            self.graph[vertex] = []
+
+    def add_edge(self, vertex1, vertex2):
+        if vertex1 in self.graph and vertex2 in self.graph:
+            self.graph[vertex1].append(vertex2)
+            self.graph[vertex2].append(vertex1)
+
+    def dfs_tree(self, start):
+        visited = set()
+        dfs_tree = defaultdict(list)
+
+        def dfs(v):
+            visited.add(v)
+            for neighbor in self.graph[v]:
+                if neighbor not in visited:
+                    dfs_tree[v].append(neighbor)
+                    dfs(neighbor)
+
+        dfs(start)
+        return dfs_tree
+
+    def display(self):
+        for vertex, edges in self.graph.items():
+            print(f"{vertex}: {edges}")
+
+if __name__ == "__main__":
+    g = Graph()
+
+    for v in ['A', 'B', 'C', 'D', 'E', 'F']:
+        g.add_vertex(v)
+
+    g.add_edge('A', 'B')
+    g.add_edge('A', 'C')
+    g.add_edge('B', 'D')
+    g.add_edge('B', 'E')
+    g.add_edge('C', 'F')
+
+    print("Graph:")
+    g.display()
+
+    start_vertex = 'A'
+    dfs_tree = g.dfs_tree(start_vertex)
+
+    print("\nDFS Tree:")
+    for vertex, edges in dfs_tree.items():
+        print(f"{vertex}: {edges}")
+
+#Travelling Salesman Problem
+
+from itertools import permutations
+import math
+
+class TSP:
+    def __init__(self, distance_matrix):
+        self.distance_matrix = distance_matrix
+        self.num_cities = len(distance_matrix)
+
+    def calculate_total_distance(self, route):
+        total_distance = 0
+        for i in range(len(route) - 1):
+            total_distance += self.distance_matrix[route[i]][route[i+1]]
+        total_distance += self.distance_matrix[route[-1]][route[0]]
+        return total_distance
+
+    def solve(self):
+        min_distance = math.inf
+        best_route = None
+        for perm in permutations(range(self.num_cities)):
+            current_distance = self.calculate_total_distance(perm)
+            if current_distance < min_distance:
+                min_distance = current_distance
+                best_route = perm
+        return best_route, min_distance
+
+def print_route(route, distance):
+    route_str = " -> ".join(f"City {city}" for city in route)
+    print(f"Optimal Route: {route_str}")
+    print(f"Total Distance: {distance}")
+
+if __name__ == "__main__":
+    distance_matrix = [
+        [0, 10, 15, 20],
+        [10, 0, 35, 25],
+        [15, 35, 0, 30],
+        [20, 25, 30, 0]
+    ]
+
+    tsp = TSP(distance_matrix)
+    best_route, min_distance = tsp.solve()
+    print_route(best_route, min_distance)
+
+#Hash Table for insertion, deletion, traversal operations(assume that there are no collisions)
+
+class HashTable:
+    def __init__(self, size):
+        self.size = size
+        self.table = [None] * size
+
+    def hash_function(self, key):
+        return key % self.size
+
+    def insert(self, key, value):
+        index = self.hash_function(key)
+        self.table[index] = (key, value)
+
+    def delete(self, key):
+        index = self.hash_function(key)
+        if self.table[index] and self.table[index][0] == key:
+            self.table[index] = None
+
+    def search(self, key):
+        index = self.hash_function(key)
+        if self.table[index] and self.table[index][0] == key:
+            return self.table[index][1]
+        return None
+
+    def traverse(self):
+        for index, item in enumerate(self.table):
+            if item is not None:
+                key, value = item
+                print(f"Index {index}: Key {key}, Value {value}")
+
+if __name__ == "__main__":
+    hash_table = HashTable(size=10)
+
+    hash_table.insert(1, "Value for key 1")
+    hash_table.insert(2, "Value for key 2")
+    hash_table.insert(12, "Value for key 12")
+
+    print("Hash Table after insertions:")
+    hash_table.traverse()
+
+    print("\nSearching for key 2:")
+    print(hash_table.search(2)) 
+
+    print("Searching for key 1:")
+    print(hash_table.search(1))
+
+    print("Searching for key 12:")
+    print(hash_table.search(12))
+
+    hash_table.delete(2)
+
+    print("\nHash Table after deletion:")
+    hash_table.traverse()
+
+    print("\nSearching for deleted key 2:")
+    print(hash_table.search(2))
+
+#hash table to handle collisions using overflow chaining
+
+class Node:
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+        self.next = None
+
+class HashTable:
+    def __init__(self, size):
+        self.size = size
+        self.table = [None] * size
+
+    def hash_function(self, key):
+        return key % self.size
+
+    def insert(self, key, value):
+        index = self.hash_function(key)
+        new_node = Node(key, value)
+
+        if self.table[index] is None:
+            self.table[index] = new_node
+        else:
+            current = self.table[index]
+            while current.next:
+                current = current.next
+            current.next = new_node
+
+    def delete(self, key):
+        index = self.hash_function(key)
+        current = self.table[index]
+        prev = None
+
+        while current:
+            if current.key == key:
+                if prev:
+                    prev.next = current.next
+                else:
+                    self.table[index] = current.next
+                return
+            prev = current
+            current = current.next
+
+    def search(self, key):
+        index = self.hash_function(key)
+        current = self.table[index]
+
+        while current:
+            if current.key == key:
+                return current.value
+            current = current.next
+
+        return None
+
+    def traverse(self):
+        for index, node in enumerate(self.table):
+            current = node
+            while current:
+                print(f"Index {index}: Key {current.key}, Value {current.value}")
+                current = current.next
+
+if __name__ == "__main__":
+    hash_table = HashTable(size=10)
+
+    hash_table.insert(1, "Value for key 1")
+    hash_table.insert(2, "Value for key 2")
+    hash_table.insert(12, "Value for key 12")
+
+    print("Hash Table after insertions:")
+    hash_table.traverse()
+
+    print("\nSearching for key 2:")
+    print(hash_table.search(2)) 
+
+    print("Searching for key 1:")
+    print(hash_table.search(1))  
+
+    print("Searching for key 12:")
+    print(hash_table.search(12))  
+
+    hash_table.delete(2)
+
+    print("\nHash Table after deletion:")
+    hash_table.traverse()
+
+    print("\nSearching for deleted key 2:")
+    print(hash_table.search(2))
